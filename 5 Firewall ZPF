@@ -1,0 +1,105 @@
+ON ALL THE 3 ROUTERS AFTER CONFIG 
+
+line console 0
+password conpa55
+login 
+exit
+
+line vty 0 4
+password vtypa55
+login 
+exit
+
+enable secret enpa55
+exit
+
+//FOR SSH LOGIN 
+ip domain-name ccnasecurity.com
+username admin secret adminpa55
+line vty 0 4
+login local 
+exit
+
+crypto key generate rsa
+>>>>1024
+
+
+R1
+ip route 10.2.2.0 255.255.255.252 10.1.1.2
+ip route 192.168.3.0 255.255.255.0 10.1.1.2
+
+R2
+ip route 192.168.1.0 255.255.255.0 10.1.1.1
+ip route 192.168.3.0 255.255.255.0 10.2.2.1
+
+R3
+ip route 192.168.1.0 255.255.255.0 10.2.2.2
+ip route 10.1.1.0 255.255.255.252 10.2.2.2
+
+check PC-A to PC-C
+ping 192.168.3.3
+ssh -l admin 10.2.2.2
+password:adminpa55
+
+
+Creating firewall zones on R3
+R3#show version
+config
+license boot module c1900 technology-package securityk9
+exit 
+copy run start
+reload
+
+password: conpa55
+en
+password: enpa55
+show version
+
+en 
+conf t
+zone security IN-ZONE
+exit
+
+zone security OUT-ZONE
+exit
+
+access-list 101 permit ip 192.168.3.0 0.0.0.255 any
+class-map type inspect match-all IN-NET-CLASS-MAP
+match access-group 101
+exit
+
+policy-map type inspect IN-2-OUT-PMAP
+class type inspect IN-NET-CLASS-MAP 
+inspect 
+exit
+exit
+
+//Now applying firewall policies
+//creating pair of zones 
+
+zone-pair security IN-2-OUT_ZPAIR source IN-ZONE destination OUT-ZONE
+service-policy type inspect IN-2-OUT_PMAP
+exit
+int gig0/0
+zone-member security IN-ZONE
+exit 
+int se0/1/0
+zone-member security OUT-ZONE
+exit 
+exit 
+
+copy run start 
+reload 
+password: conpa55
+en
+password: enpa55
+
+ping from pca to pcc
+ping 192.168.3.3
+
+ping from router 2 
+conpa55
+en
+enpa55
+ping 192.168.3.3
+it shld be unsuccessful so firewall is applied
