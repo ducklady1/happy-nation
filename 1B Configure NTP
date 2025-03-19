@@ -1,0 +1,23 @@
+Step 1:
+PC-A -> Services -> NTP
+Enable it 
+Key 1
+Password NTPpa55
+
+Step 2:
+R1,R2,R3 ->(everything in step 2 in all the routers)
+write en and conf t (opens config)
+Router(config)# ntp server 192.168.1.5
+Router(config)# ntp update-calendar
+
+Step 3:
+R1,R2,R3 ->(everything in step 3 in all the routers)
+Router(config)# ntp authenticate
+Router(config)# ntp trusted-key 1
+Router(config)# ntp authentication-key 1 md5 NTPpa55
+Router(config)# service timestamps log datetime msec
+
+Step 4:
+R1,R2,R3 ->(everything in step 4 in all the routers)
+ex
+show clock
