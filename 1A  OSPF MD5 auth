@@ -1,0 +1,23 @@
+MD5 Authentication
+R1, R2 and R3 ->(in all 3)
+(config)    router ospf 1/2/3 (depend on the router)
+(config-router)    area 0 authentication message-digest
+
+
+R1 ->
+R1(config)# interface s0/0/0
+R1(config-if)# ip ospf message-digest-key 1 md5 MD5pa55
+
+R2 ->
+R2(config)# interface s0/0/0
+R2(config-if)# ip ospf message-digest-key 1 md5 MD5pa55
+R2(config-if)# interface s0/0/1
+R2(config-if)# ip ospf message-digest-key 1 md5 MD5pa55
+
+R3 ->
+R3(config)# interface s0/0/1
+R3(config-if)# ip ospf message-digest-key 1 md5 MD5pa55
+
+
+R1, R2 and R3 ->(in all 3)
+Router# show ip ospf interface
