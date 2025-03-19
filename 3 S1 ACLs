@@ -1,0 +1,28 @@
+OSPF Configuration:
+R1(config)# network 172.22.34.0 0.0.0.255 area 0
+
+ACCESS FTP:
+
+R1 ->
+R1(config)# access-list 100 permit tcp 172.22.34.64 0.0.0.31 host 172.22.34.64 eq ftp
+            access-list 100 permit icmp 172.22.34.64 0.0.0.31 host 172.22.34.62
+            interface gigabitEthernet 0/0
+R1(config-if)# ip access-group 100 in 
+
+Now PC-A -> cmd:
+ftp 172.22.34.62
+
+
+ACCESS WWW:
+
+R1(config)# ip access-list extended HTTP_ONLY
+            permit tcp 172.22.34.96 0.0.0.15 host 172.22.34.62 eq www
+            permit icmp 172.22.34.96 0.0.0.15 host 172.22.34.6
+            en
+            interface gigabitEthernet 0/1
+R1(config-if)# ip access-group  HTTP_ONLY in
+
+Now PC-B -> web browser:
+Type: 172.22.34.62 
+
+            
