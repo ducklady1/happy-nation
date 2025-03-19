@@ -1,0 +1,11 @@
+R1,R2,R3 -> (in all 3 routers)
+Router(config)# logging host 192.168.1.6
+
+
+in PC-B 
+Services-> Syslog-> on
+
+
+R1,R2,R3 -> (in all 3 routers)
+ex
+Router# show logging
