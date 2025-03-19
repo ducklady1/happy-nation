@@ -1,0 +1,17 @@
+R2 -> en
+R2(config)# username Admin2 secret admin2pa55
+
+TACACS Server:
+Services -> AAA -> ON -> R2(ClientName) -> 192.168.2.1(ClientIP)
+tacacspa55(Secret)  Tacacs(ServerType)
+
+Add: 
+Username: Admin2    Password: admin2pa55
+
+in Router 2
+R2(config)# aaa new-model
+            aaa authentication login default group tacacs+ local
+            line console 0
+R2(config-line)# login authentication default
+                 end
+                 exit
