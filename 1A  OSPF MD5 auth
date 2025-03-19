@@ -1,3 +1,23 @@
+OSPF Configuration
+R1 -> en
+  R1(config)# router ospf 1
+  R1(config-router)# network 192.168.1.0 0.0.0.255 area 0
+                     network 10.1.1.0 0.0.0.3 area 0
+
+R2 -> en
+  R2(config)# router ospf 2
+  R2(config-router)# network 10.1.1.0 0.0.0.3 area 0
+                     network 10.2.2.0 0.0.0.3 area 0
+
+R3 -> en
+  R3(config)# router ospf 3
+  R3(config-router)# network 192.168.3.0 0.0.0.255 area 0
+                     network 10.2.2.0 0.0.0.3 area 0
+
+
+Practical starts
+
+
 MD5 Authentication
 R1, R2 and R3 ->(in all 3)
 (config)    router ospf 1/2/3 (depend on the router)
