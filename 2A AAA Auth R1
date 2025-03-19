@@ -1,0 +1,32 @@
+R1 -> en
+R1(config)# username Admin1 secret admin1pa55
+            aaa new-model
+            aaa authentication login default local
+            line console 0
+R1(config-line)# login authentication default
+                  en
+                  exit
+
+                  
+Username: Admin1
+Password: admin1pa55
+R1 -> en
+      conf t
+R1(config)# ip domain-name ccnasecurity.com
+            crypto key generate rsa
+            1024
+            aaa authentication login SSH-LOGIN local
+            line vty 0 4
+R1(config-line)# login authentication SSH-LOGIN
+                 transport input ssh
+                 end
+                 exit
+
+
+PC-A
+PC> > ssh –l Admin1 192.168.1.1 (alphabet L small is used in -l)
+      Password: admin1pa55      
+            
+                  
+                  
+            
