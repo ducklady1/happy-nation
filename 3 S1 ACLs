@@ -17,7 +17,7 @@ ACCESS WWW:
 
 R1(config)# ip access-list extended HTTP_ONLY
             permit tcp 172.22.34.96 0.0.0.15 host 172.22.34.62 eq www
-            permit icmp 172.22.34.96 0.0.0.15 host 172.22.34.6
+            permit icmp 172.22.34.96 0.0.0.15 host 172.22.34.62
             en
             interface gigabitEthernet 0/1
 R1(config-if)# ip access-group  HTTP_ONLY in
